@@ -1,11 +1,8 @@
 # NSF Future Manufacturing Data Challenge
 
-[![Dataset DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21285367.svg)](https://doi.org/10.5281/zenodo.21285367)
-
 This repository contains starter code, notebooks, documentation, and paper files for the **NSF Future Manufacturing Data Challenge**.
 
 The raw multimodal dataset is hosted on Zenodo:
-
 **Dataset DOI:** [10.5281/zenodo.21285367](https://doi.org/10.5281/zenodo.21285367)
 
 This competition and associated material are based upon work supported by the National Science Foundation under Grant Number **FMRG-2328395**.
@@ -64,11 +61,7 @@ nsf-fmrg-data-challenge/
 
 ## Data access
 
-The raw data are hosted externally on Zenodo because the files are too large for regular GitHub upload:
-
-**https://doi.org/10.5281/zenodo.21285367**
-
-After downloading the Zenodo files, extract them into the repository using this layout:
+The raw data are hosted externally on Zenodo because the files are too large for regular GitHub upload. After downloading the Zenodo files, extract them into the repository using this layout:
 
 ```text
 data/raw/thermal/
