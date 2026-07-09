@@ -1,14 +1,34 @@
 # NSF Future Manufacturing Data Challenge
 
-This repository contains the starter code, notebooks, paper source, and documentation for the **NSF Future Manufacturing Data Challenge**.
+[![Dataset DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21285367.svg)](https://doi.org/10.5281/zenodo.21285367)
 
-The challenge focuses on predicting probabilistic local geometric variation of single laser tracks in directed energy deposition (DED) using multimodal data:
+This repository contains starter code, notebooks, documentation, and paper files for the **NSF Future Manufacturing Data Challenge**.
+
+The raw multimodal dataset is hosted on Zenodo:
+
+**Dataset DOI:** [10.5281/zenodo.21285367](https://doi.org/10.5281/zenodo.21285367)
+
+This competition and associated material are based upon work supported by the National Science Foundation under Grant Number **FMRG-2328395**.
+
+## Dataset overview
+
+The challenge focuses on predicting **probabilistic local geometric variation** of single laser tracks in directed energy deposition (DED) using multimodal data:
 
 - in-situ thermal image sequences,
 - SEM images of surrounding substrate morphology,
 - Bruker/Wyko full-field height maps.
 
-This competition and associated material are based upon work supported by the National Science Foundation under Grant Number **FMRG-2328395**.
+### Experimental setup
+
+![Experimental setup: Optomec MTS 500, Bruker ContourGT-K, and Zeiss EVO MA10](paper/figures/experimental_setup_optomec_bruker_zeiss.png)
+
+The dataset was generated using an Optomec LENS MTS 500 hybrid manufacturing platform. Post-process characterization was performed using a Bruker ContourGT-K white-light 3D optical profilometer and a Zeiss EVO MA10 SEM system.
+
+### Representative modalities
+
+![Representative thermal, SEM, and height-map modalities](paper/figures/modality_examples_three_panel.png)
+
+The thermal frames provide in-situ process information, the SEM tiles provide local substrate-morphology context, and the height maps provide the post-process geometry used to define local track descriptors such as width, boundary position, contour deviation, edge roughness, or related probabilistic targets.
 
 ## Repository structure
 
@@ -21,8 +41,11 @@ nsf-fmrg-data-challenge/
 ├── data/
 │   └── raw/
 │       ├── thermal/
+│       │   └── .gitkeep
 │       ├── sem/
+│       │   └── .gitkeep
 │       └── height_maps/
+│           └── .gitkeep
 ├── notebooks/
 │   ├── 00_colab_processing_visualization_videos_final_v4_STANDALONE.ipynb
 │   └── 01_participant_guide_data_loading_visualization_v3.ipynb
@@ -30,16 +53,22 @@ nsf-fmrg-data-challenge/
 │   └── nsf_fmrg_data.py
 ├── scripts/
 │   └── run_thermal_video_export.py
-└── paper/
-    ├── nsf_fmrg_data_challenge_dataset_arxiv_v8_SETUP_REFS.tex
-    ├── nsf_fmrg_data_challenge_dataset_arxiv_v8_SETUP_REFS.pdf
-    ├── nsf_fmrg_overleaf_v8_SETUP_REFS_source.zip
-    └── figures/
+├── paper/
+│   ├── nsf_fmrg_data_challenge_dataset_arxiv_v9_ZENODO_DOI.pdf
+│   └── figures/
+│       ├── experimental_setup_optomec_bruker_zeiss.png
+│       └── modality_examples_three_panel.png
+└── processed_data/
+    └── .gitkeep
 ```
 
-## Data layout
+## Data access
 
-Place the raw data using the following structure:
+The raw data are hosted externally on Zenodo because the files are too large for regular GitHub upload:
+
+**https://doi.org/10.5281/zenodo.21285367**
+
+After downloading the Zenodo files, extract them into the repository using this layout:
 
 ```text
 data/raw/thermal/
@@ -61,7 +90,19 @@ data/raw/height_maps/
   Heightmap_21.ASC
 ```
 
-The raw data may be distributed separately from GitHub if file sizes are too large. In that case, keep the same folder structure after downloading or receiving access.
+The `.gitkeep` files are placeholders that keep the empty folders visible on GitHub. They can remain in the folders after the raw data are added locally.
+
+## Challenge task
+
+Given thermal frames, SEM context, and final height maps, participants are asked to predict local geometric variation along the laser track. Candidate targets include:
+
+- local track width,
+- left/right boundary position,
+- contour deviation,
+- edge roughness,
+- spatially varying probabilistic descriptors.
+
+The primary expected target is local width variation extracted from the height map. SEM imagery should be used only to characterize surrounding substrate morphology; the processed track region should be masked or excluded to avoid output leakage.
 
 ## Physical coordinate conventions
 
@@ -84,7 +125,7 @@ The raw data may be distributed separately from GitHub if file sizes are too lar
 - Tile 01 corresponds to the physical 100 mm side.
 - The highest-numbered tile corresponds to the physical 20 mm side.
 - The participant starter notebook reads SEM tiles but does not stitch them.
-- SEM images should be used to characterize surrounding substrate morphology. Avoid using the processed track region directly as an input feature to prevent output leakage.
+- SEM images should be used to characterize surrounding substrate morphology. Avoid using the processed track region directly as an input feature.
 
 ### Bruker/Wyko height maps
 
@@ -98,19 +139,13 @@ The raw data may be distributed separately from GitHub if file sizes are too lar
 
 ### Organizer/testing notebook
 
-Use this notebook when checking data, generating paper figures, extracting thermal frames, and exporting thermal videos:
+Use this notebook to check data, generate paper figures, extract thermal frames, and export thermal videos:
 
 ```text
 notebooks/00_colab_processing_visualization_videos_final_v4_STANDALONE.ipynb
 ```
 
 This notebook is fully standalone and does **not** depend on `src/`.
-
-It saves results to:
-
-```text
-processed_data/run_outputs/<YYYYMMDD_HHMMSS>/
-```
 
 ### Participant starter notebook
 
@@ -121,6 +156,7 @@ notebooks/01_participant_guide_data_loading_visualization_v3.ipynb
 ```
 
 This notebook demonstrates:
+
 - thermal loading and 20–100 mm extraction,
 - SEM tile loading,
 - Bruker/Wyko height-map loading,
@@ -129,22 +165,16 @@ This notebook demonstrates:
 
 ## Paper
 
-The companion arXiv/Overleaf source is in:
+The companion dataset paper PDF is included in:
 
 ```text
-paper/nsf_fmrg_data_challenge_dataset_arxiv_v8_SETUP_REFS.tex
+paper/nsf_fmrg_data_challenge_dataset_arxiv_v9_ZENODO_DOI.pdf
 ```
 
-Compiled preview:
+The arXiv record can be linked here after announcement:
 
 ```text
-paper/nsf_fmrg_data_challenge_dataset_arxiv_v8_SETUP_REFS.pdf
-```
-
-The Overleaf-ready source bundle is:
-
-```text
-paper/nsf_fmrg_overleaf_v8_SETUP_REFS_source.zip
+arXiv: pending
 ```
 
 ## Installation
@@ -155,19 +185,21 @@ From the repository root:
 python -m pip install -r requirements.txt
 ```
 
-The notebooks are designed to run in Google Colab. For local use, a standard scientific Python environment with NumPy, SciPy, Matplotlib, and Pillow is sufficient.
+The notebooks are designed to run in Google Colab. For local use, a standard scientific Python environment with NumPy, SciPy, Matplotlib, Pillow, and Pandas is sufficient.
 
 ## Citation
 
-If you use this dataset or code outside the NSF Future Manufacturing Data Challenge, cite the dataset paper and this repository.
+If you use this dataset or code outside the NSF Future Manufacturing Data Challenge, cite the dataset paper, this GitHub repository, and the Zenodo dataset DOI:
 
 ```bibtex
-@misc{hanchate2026nsffmrgdedchallenge,
+@dataset{hanchate2026nsffmrgdedchallenge,
   title        = {NSF Future Manufacturing Data Challenge: A Multimodal DED Dataset for Probabilistic Local Geometry Prediction in Laser Tracks},
   author       = {Hanchate, Abhishek and Balhara, Himanshu and Bukkapatnam, Satish T. S.},
   year         = {2026},
-  note         = {NSF Future Manufacturing Data Challenge dataset and code repository},
-  howpublished = {\url{https://github.com/abhishekhanchate/nsf-fmrg-data-challenge}}
+  publisher    = {Zenodo},
+  doi          = {10.5281/zenodo.21285367},
+  url          = {https://doi.org/10.5281/zenodo.21285367},
+  note         = {Dataset, code, and starter material for the NSF Future Manufacturing Data Challenge}
 }
 ```
 
@@ -175,4 +207,4 @@ If you use this dataset or code outside the NSF Future Manufacturing Data Challe
 
 See [`DATA_USE_LICENSE.md`](DATA_USE_LICENSE.md).
 
-Challenge use is permitted for registered participants. Any use outside the NSF Future Manufacturing Data Challenge must cite the dataset paper and repository.
+Challenge use is permitted for registered participants. Any use outside the NSF Future Manufacturing Data Challenge must cite the dataset paper, this repository, and the Zenodo dataset DOI.

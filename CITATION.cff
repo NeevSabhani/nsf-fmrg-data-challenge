@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this dataset or code outside the NSF Future Manufacturing Data Challenge, please cite the dataset paper and repository."
+message: "If you use this dataset or code outside the NSF Future Manufacturing Data Challenge, please cite the dataset paper, repository, and Zenodo DOI."
 title: "NSF Future Manufacturing Data Challenge: A Multimodal DED Dataset for Probabilistic Local Geometry Prediction in Laser Tracks"
 authors:
   - family-names: Hanchate
@@ -9,7 +9,20 @@ authors:
   - family-names: Bukkapatnam
     given-names: Satish T. S.
 year: 2026
+doi: "10.5281/zenodo.21285367"
+url: "https://doi.org/10.5281/zenodo.21285367"
 repository-code: "https://github.com/abhishekhanchate/nsf-fmrg-data-challenge"
-url: "https://github.com/abhishekhanchate/nsf-fmrg-data-challenge"
-license: "LicenseRef-CitationRequired-NSF-FMRG"
+license: "CC-BY-4.0"
 abstract: "A multimodal directed energy deposition dataset for probabilistic local geometry prediction in laser tracks."
+keywords:
+  - directed energy deposition
+  - DED
+  - smart manufacturing
+  - laser track
+  - thermal imaging
+  - SEM
+  - profilometry
+  - height map
+  - multimodal learning
+  - probabilistic prediction
+  - NSF Future Manufacturing
