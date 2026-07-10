@@ -130,12 +130,12 @@ The primary expected target is local width variation extracted from the height m
 
 ## Notebooks
 
-### Organizer/testing notebook
+### Organizer/post-processing notebook
 
-Use this notebook to check data, generate paper figures, extract thermal frames, and export thermal videos:
+Use this notebook to check data, generate figures, extract thermal frames, and export thermal videos:
 
 ```text
-notebooks/00_colab_processing_visualization_videos_final_v4_STANDALONE.ipynb
+notebooks/02_starter_code_loading_and_visualization_standalone_colab.ipynb
 ```
 
 This notebook is fully standalone and does **not** depend on `src/`.
@@ -145,11 +145,10 @@ This notebook is fully standalone and does **not** depend on `src/`.
 Use this notebook as the clean starting point for participants:
 
 ```text
-notebooks/01_participant_guide_data_loading_visualization_v3.ipynb
+notebooks/02_starter_code_loading_and_visualization.ipynb
 ```
 
 This notebook demonstrates:
-
 - thermal loading and 20–100 mm extraction,
 - SEM tile loading,
 - Bruker/Wyko height-map loading,
@@ -161,13 +160,11 @@ This notebook demonstrates:
 The companion dataset paper PDF is included in:
 
 ```text
-paper/nsf_fmrg_data_challenge_dataset_arxiv_v9_ZENODO_DOI.pdf
+paper/2607.07965v1.pdf
 ```
 
-The arXiv record can be linked here after announcement:
-
 ```text
-arXiv: pending
+arXiv: https://arxiv.org/abs/2607.07965
 ```
 
 ## Installation
@@ -178,7 +175,7 @@ From the repository root:
 python -m pip install -r requirements.txt
 ```
 
-The notebooks are designed to run in Google Colab. For local use, a standard scientific Python environment with NumPy, SciPy, Matplotlib, Pillow, and Pandas is sufficient.
+The notebooks are designed to run in Local System and/or Google Colab. For local use, a standard scientific Python environment with NumPy, SciPy, Matplotlib, Pillow, and Pandas is sufficient.
 
 ## Citation
 
@@ -193,6 +190,18 @@ If you use this dataset or code outside the NSF Future Manufacturing Data Challe
   doi          = {10.5281/zenodo.21285367},
   url          = {https://doi.org/10.5281/zenodo.21285367},
   note         = {Dataset, code, and starter material for the NSF Future Manufacturing Data Challenge}
+}
+```
+
+```bibtex
+@misc{hanchate2026nsffuturemanufacturingdata,
+      title={NSF Future Manufacturing Data Challenge: A Multimodal DED Dataset for Probabilistic Local Geometry Prediction in Laser Tracks}, 
+      author={Abhishek Hanchate and Himanshu Balhara and Satish T. S. Bukkapatnam},
+      year={2026},
+      eprint={2607.07965},
+      archivePrefix={arXiv},
+      primaryClass={physics.app-ph},
+      url={https://arxiv.org/abs/2607.07965}, 
 }
 ```
 
