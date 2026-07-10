@@ -44,14 +44,14 @@ nsf-fmrg-data-challenge/
 │       └── height_maps/
 │           └── .gitkeep
 ├── notebooks/
-│   ├── 00_colab_processing_visualization_videos_final_v4_STANDALONE.ipynb
-│   └── 01_participant_guide_data_loading_visualization_v3.ipynb
+│   ├── 01_starter_code_loading_and_visualization.ipynb
+│   └── 02_starter_code_loading_and_visualization_standalone_colab.ipynb 
 ├── src/
 │   └── nsf_fmrg_data.py
 ├── scripts/
 │   └── run_thermal_video_export.py
 ├── paper/
-│   ├── nsf_fmrg_data_challenge_dataset_arxiv_v9_ZENODO_DOI.pdf
+│   ├── 2607.07965v1.pdf
 │   └── figures/
 │       ├── experimental_setup_optomec_bruker_zeiss.png
 │       └── modality_examples_three_panel.png
@@ -145,7 +145,7 @@ This notebook is fully standalone and does **not** depend on `src/`.
 Use this notebook as the clean starting point for participants:
 
 ```text
-notebooks/02_starter_code_loading_and_visualization.ipynb
+notebooks/01_starter_code_loading_and_visualization.ipynb
 ```
 
 This notebook demonstrates:
@@ -163,8 +163,10 @@ The companion dataset paper PDF is included in:
 paper/2607.07965v1.pdf
 ```
 
+or found here:
+
 ```text
-arXiv: https://arxiv.org/abs/2607.07965
+https://arxiv.org/abs/2607.07965
 ```
 
 ## Installation
@@ -182,7 +184,7 @@ The notebooks are designed to run in Local System and/or Google Colab. For local
 If you use this dataset or code outside the NSF Future Manufacturing Data Challenge, cite the dataset paper, this GitHub repository, and the Zenodo dataset DOI:
 
 ```bibtex
-@dataset{hanchate2026nsffmrgdedchallenge,
+@dataset{hanchate2026nsffmrgdedchallengedata,
   title        = {NSF Future Manufacturing Data Challenge: A Multimodal DED Dataset for Probabilistic Local Geometry Prediction in Laser Tracks},
   author       = {Hanchate, Abhishek and Balhara, Himanshu and Bukkapatnam, Satish T. S.},
   year         = {2026},
@@ -193,15 +195,17 @@ If you use this dataset or code outside the NSF Future Manufacturing Data Challe
 }
 ```
 
+and/or 
+
 ```bibtex
-@misc{hanchate2026nsffuturemanufacturingdata,
-      title={NSF Future Manufacturing Data Challenge: A Multimodal DED Dataset for Probabilistic Local Geometry Prediction in Laser Tracks}, 
-      author={Abhishek Hanchate and Himanshu Balhara and Satish T. S. Bukkapatnam},
-      year={2026},
-      eprint={2607.07965},
-      archivePrefix={arXiv},
-      primaryClass={physics.app-ph},
-      url={https://arxiv.org/abs/2607.07965}, 
+@misc{hanchate2026nsffmrgdedchallenge,
+  title          = {NSF Future Manufacturing Data Challenge: A Multimodal DED Dataset for Probabilistic Local Geometry Prediction in Laser Tracks},
+  author         = {Hanchate, Abhishek and Balhara, Himanshu and Bukkapatnam, Satish T. S.},
+  year           = {2026},
+  eprint         = {2607.07965},
+  archivePrefix  = {arXiv},
+  primaryClass   = {physics.app-ph},
+  url            = {https://arxiv.org/abs/2607.07965},
 }
 ```
 
