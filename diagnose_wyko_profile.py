@@ -1,17 +1,14 @@
 """
-Why are the Wyko-derived width labels ~3x smaller than the SEM-measured
-width, with ~25% exact zeros?
+Shows why the width labels were wrong.
 
-extract_local_width_v3 detrends the height profile across the track, then
-takes the largest contiguous run of rows ABOVE max(2um, 3*sigma_noise).
-That threshold is a NOISE floor, not a track EDGE. A melt track has
-sloped shoulders, so a 3-sigma cut slices off everything except the very
-crown -- underestimating width, and returning 0 whenever the crown itself
-fails to clear the cut.
+The original extractor took the largest contiguous run of rows above
+max(2um, 3*sigma) — a noise floor, not a track edge. A melt track has
+sloped shoulders, so that cut slices off everything but the crown, and
+returns 0 whenever the crown itself fails to clear it.
 
-This plots the actual detrended profile at several x positions with the
-current threshold drawn on it, next to a half-maximum edge criterion (the
-standard way to measure a feature's width), so the mechanism is visible.
+Plots the detrended profile at several x positions with both that
+threshold and a half-maximum edge criterion drawn on, so the mechanism
+is visible.
 
 Run: python diagnose_wyko_profile.py
 """

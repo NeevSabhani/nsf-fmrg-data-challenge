@@ -35,17 +35,27 @@ tracks — at track 10, x=85 mm the threshold (7.5 µm) exceeded the track's own
 crown (7.0 µm). Every model before that was being fit to noise. See
 [`PROGRESS.md`](PROGRESS.md) for the full evidence trail.
 
+![Leave-one-power-out results](report/figures/fig2_results.png)
+
+*Measured width vs power; leave-one-power-out predictions with ±1σ intervals;
+and the within-track null — the headline correlation is a between-power effect.*
+
 ## Reproducing
 
 ```bash
 python build_pairs_local_v8.py   # corrected labels + feature cache
-python v9_segment_model.py       # every metric in the report
-python make_report_figures.py    # figures
-python make_report.py            # the PDF itself
+python v9_segment_model.py       # every metric and figure in the report
 ```
 
-The report's tables are generated from the model's own `metrics.json`, not
-transcribed, so the document cannot drift from the results.
+Diagnostics for the central claim:
+
+```bash
+python diagnose_wyko_profile.py  # the label defect, made visible
+python diagnose_sem_band.py      # SEM band vs Wyko width — independent check
+```
+
+Raw data is not included; download it from the Zenodo DOI below into
+`data/raw/`.
 
 ## Generative AI disclosure
 
@@ -61,9 +71,10 @@ Everything below this line — plus `paper/`, `src/`, the notebooks,
 `requirements.txt`, `CITATION.cff` and `DATA_USE_LICENSE.md` — is
 **organizer-provided starter material**, from
 [abhishekhanchate/nsf-fmrg-data-challenge](https://github.com/abhishekhanchate/nsf-fmrg-data-challenge).
-The work in this repository is the `build_pairs_local*.py`, `train_v*.py`,
-`diagnose_*.py`, `v9_*.py`, `make_report*.py` scripts and the `report/` output.
-Generated data under `processed_data/` is gitignored and rebuilt by the scripts.
+The work in this repository is `build_pairs_local_v8.py`, `v9_segment_model.py`,
+the `diagnose_*.py` scripts and the `report/` output. `build_pairs_local.py` is
+kept for its shared data loaders. Generated data under `processed_data/` is
+gitignored and rebuilt by the scripts.
 
 ---
 

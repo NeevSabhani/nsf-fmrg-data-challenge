@@ -1,31 +1,19 @@
 """
-v8 — fixes the two root causes found by diagnose_sem_band.py and
-diagnose_wyko_profile.py.
+Builds the corrected (thermal, SEM, metadata) -> width dataset.
 
-FIX 1 (labels — this is the big one). extract_local_width_v3 thresholded
-the detrended height profile at a NOISE floor, max(2um, 3*sigma). That
-floor drifts with local noise instead of tracking the track's edge, so
-the label measured noise, not width: at track 10 x=85mm the cut (7.5um)
-sat ABOVE the track's own peak (7.0um) and reported width 0.000mm for a
-plainly-present track. Across sample x positions the old criterion gave
-0.016/0.394/0.394/0.478/0.215/0.000mm while a half-maximum edge criterion
-gave a stable 0.402/0.442/0.482/0.458/0.450/0.454mm. Independent
-confirmation: SEM-measured band width had ~ZERO correlation (+0.045) with
-these labels. Unlearnable by construction -- which is exactly why every
-model plateaued at zero correlation.
-v8 measures width at HALF MAXIMUM of the (smoothed) track crown, the
-standard feature-width criterion, and reports NaN rather than 0 when no
-track is detectable, so "absent" is not silently trained on as "zero".
+Two fixes over the original builder:
 
-FIX 2 (SEM masking). detect_track_band returned ONE row range per tile
-and build_pairs painted it across the FULL image width
-(mask[row_start:row_end, :] = 1.0). Two problems, both visible in QA:
-tile 01's track only starts ~20% across (so the mask claimed a band where
-there is no track), and the track drifts/slants vertically within a tile
-(so one flat row range cannot follow it -- and cropping tightly around a
-tile-average band, as v6 did, cuts the real track off, which is why v6
-regressed). v8 detects the band PER COLUMN, centers each sample's row
-crop on the LOCAL band position, and marks columns with no track.
+1. Labels. The old extractor thresholded the detrended height profile at
+   a noise floor, max(2um, 3*sigma), rather than at a track edge — at
+   track 10 x=85mm that cut (7.5um) sat above the track's own crown
+   (7.0um) and reported 0.000mm for a plainly-present track. Width is
+   now measured at HALF MAXIMUM of the smoothed crown, and returns NaN
+   rather than 0 when no track is detectable.
+
+2. SEM masking. The old code took one row range per tile and painted it
+   across the full image width, but the band is absent from part of the
+   first tile and drifts vertically within a tile. Bands are now
+   detected per column, with each row crop centred on the local band.
 
 Run: python build_pairs_local_v8.py
 """

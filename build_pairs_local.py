@@ -1,15 +1,13 @@
 """
-Standalone LOCAL script (v3) — builds paired (thermal, masked SEM, metadata) -> width
-samples for all 4 tracks and saves .npz files plus QA figures.
+Shared data loaders and the original (v3) pair builder.
 
-Fixes vs v2:
-  - SEM tile index: floor() instead of round()  (round misassigned ~half of samples)
-  - Width extraction: robust per-profile linear detrend in y, noise-adaptive
-    threshold (max(2um, 3*MAD-sigma)), width = largest CONTIGUOUS elevated run
-  - QA outputs: mask-band overlays and width-vs-x plots per track, plausibility stats
+Kept mainly for its loaders — load_wyko_asc, robust_line_detrend_profile
+and the SEM tile helpers are imported by the v8 builder, the diagnostics
+and the figure script. Its own width extractor is superseded: it
+thresholds at a noise floor rather than a track edge. See
+build_pairs_local_v8.py.
 
 Run: python build_pairs_local.py
-Requires: numpy, scipy, pillow, matplotlib
 """
 import re
 import gc

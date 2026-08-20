@@ -1,31 +1,17 @@
 """
-v9 — reframed target, built on the fixed v8 pipeline.
+Segment-level width model — the headline result.
 
-WHY REFRAME. Per-0.2mm pointwise width sits below the noise floor of the
-available metrology: two INDEPENDENT good measurements of it (Wyko
-half-max, SEM band thickness) correlate only +0.03..+0.20 with each
-other, and every model plateaued at corr ~0.00 on held-out data even
-after the label bug was fixed (see PROGRESS.md). Averaging over a
-segment suppresses independent measurement noise as ~1/sqrt(n) while
-preserving real process-driven structure, so this predicts SEGMENT-level
-quantities instead:
+Pointwise per-0.2mm width lies below the noise floor of the available
+metrology, so this predicts 4mm-segment quantities instead: segment mean
+width, and segment width variability. Averaging suppresses independent
+measurement noise as ~1/sqrt(n) while preserving process-driven
+structure.
 
-    target 1: segment MEAN width          (the width itself)
-    target 2: segment WIDTH VARIABILITY   (std within the segment --
-                                           this is "local width variation"
-                                           as a descriptor)
-
-MODEL. ~16 segments/track x 4 tracks = 64 samples, so a CNN is
-inappropriate; this uses ridge regression on physically-interpretable
-scalar features. Feature groups are kept separate (thermal = process,
-SEM = substrate) so their contributions can be compared directly, which
-is what the "process- vs substrate-driven" judging criterion asks for.
-
-VALIDATION. Leave-one-TRACK-out across all 4 tracks. Each fold trains on
-3 laser powers and tests on the 4th, so the CV is simultaneously the
-generalization test and the "robustness across laser powers" evidence.
-Every fold is reported, including the hard extrapolation folds (200W and
-400W are the range ends).
+64 segments across 4 tracks, so a CNN is inappropriate; this is ridge
+regression on interpretable scalar features. Thermal (process) and SEM
+(substrate) feature groups are kept separate so their contributions can
+be compared directly. Validation is leave-one-track-out, which is
+leave-one-laser-power-out: every fold tests an unseen power.
 
 Run: python v9_segment_model.py
 """
