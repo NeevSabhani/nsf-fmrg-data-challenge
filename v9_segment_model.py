@@ -1,6 +1,4 @@
 """
-Segment-level width model — the headline result.
-
 Pointwise per-0.2mm width lies below the noise floor of the available
 metrology, so this predicts 4mm-segment quantities instead: segment mean
 width, and segment width variability. Averaging suppresses independent
@@ -12,8 +10,6 @@ regression on interpretable scalar features. Thermal (process) and SEM
 (substrate) feature groups are kept separate so their contributions can
 be compared directly. Validation is leave-one-track-out, which is
 leave-one-laser-power-out: every fold tests an unseen power.
-
-Run: python v9_segment_model.py
 """
 import json
 import os
