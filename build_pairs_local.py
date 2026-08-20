@@ -1,14 +1,4 @@
-"""
-Shared data loaders and the original (v3) pair builder.
 
-Kept mainly for its loaders — load_wyko_asc, robust_line_detrend_profile
-and the SEM tile helpers are imported by the v8 builder, the diagnostics
-and the figure script. Its own width extractor is superseded: it
-thresholds at a noise floor rather than a track edge. See
-build_pairs_local_v8.py.
-
-Run: python build_pairs_local.py
-"""
 import re
 import gc
 import warnings
