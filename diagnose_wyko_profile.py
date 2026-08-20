@@ -1,5 +1,4 @@
 """
-Shows why the width labels were wrong.
 
 The original extractor took the largest contiguous run of rows above
 max(2um, 3*sigma) — a noise floor, not a track edge. A melt track has
@@ -10,7 +9,6 @@ Plots the detrended profile at several x positions with both that
 threshold and a half-maximum edge criterion drawn on, so the mechanism
 is visible.
 
-Run: python diagnose_wyko_profile.py
 """
 import numpy as np
 import matplotlib
