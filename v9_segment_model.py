@@ -240,18 +240,48 @@ if __name__ == "__main__":
         print(f"  {flag}{f['power']}W (track {t:2d}): MAE {f['mae']:.4f} vs baseline "
               f"{f['baseline_mae']:.4f} | alpha {f['alpha']}")
 
-    # Uncertainty: per-fold training residual std as the predictive sigma.
-    sigma = np.array([r_all["folds"][m["track"]]["resid_std_train"] for m in meta])
-    z = (y_mean - p_all) / sigma
-    cov1 = float(np.mean(np.abs(z) <= 1.0)); cov2 = float(np.mean(np.abs(z) <= 2.0))
-    print(f"\nUncertainty (mean-width): 68% coverage {cov1:.3f} | 95% coverage {cov2:.3f}")
+    # Uncertainty: per-fold OUT-OF-FOLD residual std as the predictive sigma.
+    # Computed for BOTH feature sets: the headline model is thermal-only, so
+    # its coverage must be quoted rather than the all-feature model's.
+    def coverage(res, preds):
+        sig = np.array([res["folds"][m["track"]]["resid_std_train"] for m in meta])
+        z = (y_mean - preds) / sig
+        return sig, float(np.mean(np.abs(z) <= 1.0)), float(np.mean(np.abs(z) <= 2.0))
+
+    sigma, cov1, cov2 = coverage(r_all, p_all)
+    sigma_th, cov1_th, cov2_th = coverage(r_th, p_th)
+    print(f"\nUncertainty (mean-width, all features): 68% {cov1:.3f} | 95% {cov2:.3f}")
+    print(f"Uncertainty (mean-width, thermal only):  68% {cov1_th:.3f} | 95% {cov2_th:.3f}")
     results["coverage_1sigma"] = cov1
     results["coverage_2sigma"] = cov2
+    results["coverage_1sigma_thermal"] = cov1_th
+    results["coverage_2sigma_thermal"] = cov2_th
+
+    # Within-track correlation: strip each track's mean from prediction and
+    # truth. This separates the between-power effect (which works) from
+    # within-track variation (which does not).
+    def within_corr(preds):
+        pc, yc = preds.copy(), y_mean.copy()
+        for t in TRACKS:
+            m = tracks == t
+            pc[m] -= pc[m].mean(); yc[m] -= yc[m].mean()
+        per = {int(t): float(np.corrcoef(pc[tracks == t], yc[tracks == t])[0, 1])
+               for t in TRACKS}
+        return float(np.corrcoef(pc, yc)[0, 1]), per
+
+    wc_all, wc_all_per = within_corr(p_all)
+    wc_th, wc_th_per = within_corr(p_th)
+    print(f"Within-track corr (all features): {wc_all:+.3f}  per-track {wc_all_per}")
+    print(f"Within-track corr (thermal only): {wc_th:+.3f}  per-track {wc_th_per}")
+    results["within_track_corr"] = wc_all
+    results["within_track_corr_thermal"] = wc_th
+    results["within_track_corr_per_track_thermal"] = wc_th_per
 
     with open(f"{OUT_DIR}/metrics.json", "w") as f:
         json.dump(results, f, indent=2, default=float)
     np.savez(f"{OUT_DIR}/segment_predictions.npz",
              pred_mean=p_all, true_mean=y_mean, pred_std=v_all, true_std=y_std,
+             pred_mean_thermal=p_th, sigma_thermal=sigma_th,
              tracks=tracks, powers=powers, sigma=sigma,
              x_lo=np.array([m["x_lo"] for m in meta]))
 

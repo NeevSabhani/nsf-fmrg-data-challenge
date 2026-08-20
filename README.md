@@ -1,4 +1,71 @@
-# NSF Future Manufacturing Data Challenge
+# NSF Future Manufacturing Data Challenge — track width prediction
+
+**Submission entry: [`report/NSF_FMRG_report.pdf`](report/NSF_FMRG_report.pdf)**
+
+Predicting local geometric variation of single laser tracks from thermal, SEM
+and height-map data, across four tracks at 200 / 300 / 350 / 400 W.
+
+## Headline results
+
+| | |
+|---|---|
+| Segment mean width, **thermal features only** | **R² 0.800**, corr +0.902, MAE 0.0495 mm (baseline 0.1469 mm) |
+| Validation | **Leave-one-power-out** — every fold tested on an unseen laser power |
+| Uncertainty calibration | 0.656 / 0.969 empirical coverage vs 0.68 / 0.95 nominal |
+| Process vs substrate | Thermal R² +0.800 **≫** SEM R² −0.228 → width is **process-driven** |
+| Not a power proxy | Laser power alone reaches only R² +0.607 |
+
+Two results, one positive and one negative:
+
+1. **Thermal signature predicts track width across laser powers**, with
+   calibrated uncertainty, beating the baseline at every individual power level.
+2. **Pointwise (per-0.2 mm) width variation is not predictable from this
+   dataset** — and this is shown with independent metrology rather than inferred
+   from model failure. Wyko half-maximum width and SEM band thickness are two
+   separate physical measurements of the same quantity and correlate only
+   +0.03 to +0.20 *with each other*.
+
+### The finding that mattered most
+
+Our first seven models were invalidated by a defect in our **own ground-truth
+labels**, not by any modeling choice. The width extractor thresholded the
+detrended height profile at a *noise* floor (`max(2µm, 3σ)`) rather than a track
+*edge*, so it measured noise and returned silent `0.000 mm` for plainly present
+tracks — at track 10, x=85 mm the threshold (7.5 µm) exceeded the track's own
+crown (7.0 µm). Every model before that was being fit to noise. See
+[`PROGRESS.md`](PROGRESS.md) for the full evidence trail.
+
+## Reproducing
+
+```bash
+python build_pairs_local_v8.py   # corrected labels + feature cache
+python v9_segment_model.py       # every metric in the report
+python make_report_figures.py    # figures
+python make_report.py            # the PDF itself
+```
+
+The report's tables are generated from the model's own `metrics.json`, not
+transcribed, so the document cannot drift from the results.
+
+## Generative AI disclosure
+
+Generative AI was used substantially in this work. Anthropic's Claude, via the
+Claude Code CLI, was used to write and refactor the pipeline, diagnostic and
+modeling scripts, to help analyse intermediate results, and to draft the report.
+All modeling decisions and reported conclusions were reviewed and verified
+against the numerical outputs.
+
+## Provenance
+
+Everything below this line — plus `paper/`, `src/`, the notebooks,
+`requirements.txt`, `CITATION.cff` and `DATA_USE_LICENSE.md` — is
+**organizer-provided starter material**, from
+[abhishekhanchate/nsf-fmrg-data-challenge](https://github.com/abhishekhanchate/nsf-fmrg-data-challenge).
+The work in this repository is the `build_pairs_local*.py`, `train_v*.py`,
+`diagnose_*.py`, `v9_*.py`, `make_report*.py` scripts and the `report/` output.
+Generated data under `processed_data/` is gitignored and rebuilt by the scripts.
+
+---
 
 This repository contains starter code, notebooks, documentation, and paper files for the **NSF Future Manufacturing Data Challenge**.
 
