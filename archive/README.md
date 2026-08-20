@@ -23,5 +23,3 @@ They import from the repository root, so run them from there:
 ```bash
 PYTHONPATH=. python archive/train_v7_ensemble.py
 ```
-
-Full evidence trail for each: [`../PROGRESS.md`](../PROGRESS.md).

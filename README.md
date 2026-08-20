@@ -32,8 +32,8 @@ labels**, not by any modeling choice. The width extractor thresholded the
 detrended height profile at a *noise* floor (`max(2µm, 3σ)`) rather than a track
 *edge*, so it measured noise and returned silent `0.000 mm` for plainly present
 tracks — at track 10, x=85 mm the threshold (7.5 µm) exceeded the track's own
-crown (7.0 µm). Every model before that was being fit to noise. See
-[`PROGRESS.md`](PROGRESS.md) for the full evidence trail.
+crown (7.0 µm). Every model before that was being fit to noise.
+`diagnose_wyko_profile.py` reproduces the diagnosis.
 
 ![Leave-one-power-out results](report/figures/fig2_results.png)
 
