@@ -1,15 +1,12 @@
 """
-Per-column track band detection in the SEM tiles, testing three things
-the original pipeline assumed but never verified:
+Testing:
 
   A. Whether the track spans the full width of every tile (it does not —
      tile 01 has no track across 17.4% of its columns).
   B. Whether the track drifts vertically within a tile (it does, so one
      flat row range per tile cannot follow it).
   C. Whether SEM band thickness — an independent measurement of local
-     width — agrees with the Wyko labels. It does not, which is the
-     model-free evidence that pointwise width is unmeasurable here.
-
+     width — agrees with the Wyko labels.
 Run: python diagnose_sem_band.py
 """
 import numpy as np
