@@ -57,14 +57,6 @@ python diagnose_sem_band.py      # SEM band vs Wyko width — independent check
 Raw data is not included; download it from the Zenodo DOI below into
 `data/raw/`.
 
-## Generative AI disclosure
-
-Generative AI was used substantially in this work. Anthropic's Claude, via the
-Claude Code CLI, was used to write and refactor the pipeline, diagnostic and
-modeling scripts, to help analyse intermediate results, and to draft the report.
-All modeling decisions and reported conclusions were reviewed and verified
-against the numerical outputs.
-
 ## Provenance
 
 Everything below this line — plus `paper/`, `src/`, the notebooks,
