@@ -9,7 +9,8 @@ data/raw/**/*.tif
 data/raw/**/*.tiff
 data/raw/**/*.ASC
 data/raw/**/*.asc
-processed_data/
+processed_data/*
+!processed_data/model_outputs_v9/
 *.mp4
 *.gif
 
@@ -29,8 +30,3 @@ processed_data/
 # OS
 .DS_Store
 Thumbs.db
-
-# Local working files (kept on disk, not published)
-CLAUDE.md
-make_report.py
-make_report_figures.py

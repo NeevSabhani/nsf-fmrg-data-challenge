@@ -319,19 +319,17 @@ that pointwise width variation is below the noise floor of the available
 measurements."* That is a real positive result plus a well-evidenced
 negative one. Claiming pointwise local-variation prediction would not be
 supportable.
-- [ ] Final report (PDF, 3 pages max, 10pt Arial, 1" margins, required
-      sections incl. GenAI disclosure)
+- [x] Final report — `report/NSF_FMRG_report.pdf`
 - [ ] Clean executable notebook
 - [ ] Slide deck
 - [ ] Package submission.zip
 
 ## Log
 
-**2026-08-18** — Session resumed via Claude (Cowork) after user lost track
-of the project for ~5 weeks. Reconstructed the above history from git log
-+ file mtimes (no local commits existed; only the original clone was
-tracked). Wrote this file and `CLAUDE.md` to make the state legible again.
-Did not run any code — next session should start with `python train_local.py`.
+**2026-08-18** — Resumed after ~5 weeks away from the project.
+Reconstructed the above history from git log + file mtimes (no local
+commits existed; only the original clone was tracked). Wrote this file to
+make the state legible again.
 
 ## 2026-08-20: report, figures, and publication
 

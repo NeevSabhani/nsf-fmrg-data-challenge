@@ -54,6 +54,12 @@ python diagnose_wyko_profile.py  # the label defect, made visible
 python diagnose_sem_band.py      # SEM band vs Wyko width — independent check
 ```
 
+Metrics and predictions are written to
+[`processed_data/model_outputs_v9/`](processed_data/model_outputs_v9), which is
+committed so the results are inspectable without rerunning anything.
+Superseded versions and the negative results behind them are in
+[`archive/`](archive).
+
 Raw data is not included; download it from the Zenodo DOI below into
 `data/raw/`.
 
