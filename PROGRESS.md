@@ -332,3 +332,41 @@ of the project for ~5 weeks. Reconstructed the above history from git log
 + file mtimes (no local commits existed; only the original clone was
 tracked). Wrote this file and `CLAUDE.md` to make the state legible again.
 Did not run any code — next session should start with `python train_local.py`.
+
+## 2026-08-20: report, figures, and publication
+
+- **Fixed a metric-consistency bug before writing anything up.** The saved
+  coverage numbers (0.625/0.922) came from the **all-feature** model, while
+  the headline R2 0.800 is the **thermal-only** model — quoting both
+  together would have mixed two models. `v9_segment_model.py` now computes
+  coverage and within-track correlation for both feature sets and saves
+  thermal-only predictions. Results:
+  - thermal-only coverage **0.656 / 0.969** (vs 0.68/0.95 nominal), i.e.
+    slightly *better* calibrated than the all-feature model
+  - thermal-only within-track corr +0.079 (unchanged conclusion)
+  - thermal-only beats baseline at **all four** power levels, including
+    350W where the all-feature model fails (0.0219 vs 0.0281 baseline).
+    This is why the report leads with thermal-only.
+- **`make_report_figures.py`** → `report/figures/` (moved out of
+  `processed_data/`, which is gitignored, so the figures ship with the repo):
+  - `fig1_labels_and_bug.png` — the 3-sigma cut above the crown, labels
+    before/after with zero-fractions (11/38/21/14% per track), and the
+    Wyko-vs-SEM pointwise disagreement (+0.195 on track 10)
+  - `fig2_results.png` — width vs power, leave-one-power-out parity with
+    out-of-fold +/-1 sigma, and the within-track null
+  - `fig3_calibration.png` — reliability curve + standardised residuals
+    (z mean -0.106, z std 1.015)
+- **`make_report.py`** → `report/NSF_FMRG_report.pdf`. Real Arial TTFs from
+  `C:\Windows\Fonts`, 1" margins, 10pt body. Every table and metric is read
+  from `metrics.json`, so the report cannot drift from the model. The script
+  prints content height and warns if page count leaves `PAGE_MIN..PAGE_MAX`.
+  Originally built to the brief's 3-page cap; user asked for 4-5 pages
+  instead since the deadline has passed, so it now runs 5 pages with the
+  fuller methodology, the SEM-defect section, and Table 3 (ruled-out
+  hypotheses).
+- **Published** to https://github.com/NeevSabhani/nsf-fmrg-data-challenge
+  (public). `local-work` pushed as `main`. Organizer's repo renamed to the
+  `upstream` remote. README rewritten to lead with the results and to keep
+  organizer-provided material clearly attributed.
+
+Remaining: clean executable notebook, slide deck.

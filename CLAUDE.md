@@ -21,7 +21,12 @@ Cloned from https://github.com/abhishekhanchate/nsf-fmrg-data-challenge on
 `src/nsf_fmrg_data.py`, `requirements.txt`) is organizer-provided starter
 material — none of it is the user's own work. All real work is the
 `*_local*.py` / `train_v*.py` / `diagnose_*.py` / `v9_*.py` scripts, now
-committed on branch `local-work` (`main` is untouched, nothing pushed).
+committed on branch `local-work`.
+
+**Remotes (as of 2026-08-20):** `origin` =
+https://github.com/NeevSabhani/nsf-fmrg-data-challenge (the user's own
+public repo; local `local-work` tracks `origin/main`). `upstream` = the
+organizer's original repo — **never push there.**
 Generated data under `processed_data/` is gitignored and exists on disk
 only — it can be rebuilt by rerunning the build scripts.
 
@@ -108,17 +113,16 @@ power levels, or lower-noise width metrology. Not another model.
 
 ## Remaining deliverables (nothing modeling-related is pending)
 
-- [ ] Report — PDF, max 3 pages, >=10pt Arial, 1" margins. Sections:
-      Executive Summary; Problem Formulation and Methodology (**must
-      explicitly disclose Generative AI use** — Claude Code was used
-      substantially); Modeling and Outcomes; Conclusion.
-      **Recommended claim:** *"Thermal signature predicts track width
-      across laser powers (R2 0.80 leave-one-power-out, calibrated
-      uncertainty); width is process- not substrate-driven; and we show
-      with independent metrology that pointwise width variation lies
-      below the noise floor of the available measurements."* That is a
-      real positive result plus a rigorously-evidenced negative one.
-      Claiming pointwise local-variation prediction is **not** supportable.
+- [x] **Report — DONE.** `report/NSF_FMRG_report.pdf`, built by
+      `make_report.py` (figures by `make_report_figures.py` →
+      `report/figures/`). 5 pages, real Arial TTF, 1" margins. The user
+      asked for 4–5 pages rather than the brief's 3-page cap, since the
+      deadline has passed — `PAGE_MIN/PAGE_MAX` at the top of
+      `make_report.py` control this, and the script prints content height
+      and warns if out of range. **All tables/metrics are read from
+      `model_outputs_v9/metrics.json`, never transcribed**, so the report
+      cannot drift from the model. Re-run both scripts after any model
+      change.
 - [ ] Clean executable notebook (end-to-end: `build_pairs_local_v8.py` →
       `v9_segment_model.py`), not the messy iteration scripts.
 - [ ] Slide deck (single self-contained PPT or PDF).
