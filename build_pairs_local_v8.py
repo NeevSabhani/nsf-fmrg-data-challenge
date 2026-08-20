@@ -1,22 +1,4 @@
-"""
-Builds the corrected (thermal, SEM, metadata) -> width dataset.
 
-Two fixes over the original builder:
-
-1. Labels. The old extractor thresholded the detrended height profile at
-   a noise floor, max(2um, 3*sigma), rather than at a track edge — at
-   track 10 x=85mm that cut (7.5um) sat above the track's own crown
-   (7.0um) and reported 0.000mm for a plainly-present track. Width is
-   now measured at HALF MAXIMUM of the smoothed crown, and returns NaN
-   rather than 0 when no track is detectable.
-
-2. SEM masking. The old code took one row range per tile and painted it
-   across the full image width, but the band is absent from part of the
-   first tile and drifts vertically within a tile. Bands are now
-   detected per column, with each row crop centred on the local band.
-
-Run: python build_pairs_local_v8.py
-"""
 import gc
 import os
 from pathlib import Path
