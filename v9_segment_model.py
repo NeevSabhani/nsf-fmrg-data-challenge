@@ -298,3 +298,34 @@ if __name__ == "__main__":
     fig.tight_layout()
     fig.savefig(f"{OUT_DIR}/width_vs_power.png", dpi=150)
     print("Saved", f"{OUT_DIR}/width_vs_power.png")
+
+    # Along-track prediction with the out-of-fold tolerance band. Every panel
+    # is a held-out fold: that track's laser power was absent from training,
+    # so this is what the model reports for a power it has never seen.
+    fig, axes = plt.subplots(2, 2, figsize=(11, 6), sharex=True)
+    by_power = sorted(TRACKS, key=lambda t: TRACK_POWER[t])
+    for ax, t in zip(axes.ravel(), by_power):
+        m = tracks == t
+        xs = np.array([meta[i]["x_lo"] for i in np.where(m)[0]])
+        o = np.argsort(xs)
+        xs, pred, truth, sd = xs[o], p_th[m][o], y_mean[m][o], sigma_th[m][o]
+        ax.fill_between(xs, pred - 2 * sd, pred + 2 * sd, color="tab:green",
+                        alpha=0.15, label="$\\pm2\\sigma$")
+        ax.fill_between(xs, pred - sd, pred + sd, color="tab:green",
+                        alpha=0.30, label="$\\pm1\\sigma$")
+        ax.plot(xs, pred, "-", color="tab:green", lw=2, label="predicted")
+        ax.plot(xs, truth, "k.-", lw=1, ms=7, alpha=0.8, label="measured")
+        inside = float(np.mean(np.abs(truth - pred) <= sd))
+        ax.set_title(f"track {t} — {TRACK_POWER[t]} W held out  |  "
+                     f"MAE {np.mean(np.abs(pred - truth)):.4f} mm  |  "
+                     f"{inside:.0%} within 1$\\sigma$", fontsize=10)
+        ax.set_ylabel("segment width (mm)")
+        ax.grid(alpha=0.25)
+    for ax in axes[1]:
+        ax.set_xlabel("x along track (mm)")
+    axes[0, 0].legend(fontsize=8, ncol=2, loc="best")
+    fig.suptitle("Along-track prediction from thermal features — each panel is a "
+                 "laser power held out of training", fontsize=11)
+    fig.tight_layout()
+    fig.savefig(f"{OUT_DIR}/track_predictions.png", dpi=150)
+    print("Saved", f"{OUT_DIR}/track_predictions.png")

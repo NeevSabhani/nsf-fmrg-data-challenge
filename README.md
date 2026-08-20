@@ -40,6 +40,17 @@ crown (7.0 µm). Every model before that was being fit to noise. See
 *Measured width vs power; leave-one-power-out predictions with ±1σ intervals;
 and the within-track null — the headline correlation is a between-power effect.*
 
+![Along-track prediction](processed_data/model_outputs_v9/track_predictions.png)
+
+*The same model viewed along each track. Every panel is a held-out fold: that
+laser power was absent from training, so this is what the model reports for a
+power it has never seen. The band is the out-of-fold ±1σ / ±2σ tolerance.*
+
+Note the 200 W panel: the prediction sits systematically low and only 25% of
+segments fall within 1σ. That track is the end of the power range, so the model
+is extrapolating rather than interpolating, and the aggregate 65.6% coverage
+hides it. The interior folds (350 W, 400 W) sit at 100% and 94%.
+
 ## Reproducing
 
 ```bash
